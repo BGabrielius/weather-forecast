@@ -1,0 +1,118 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: rgb(242, 251, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(242, 251, 255, 1) 0%,
+    rgba(173, 234, 255, 1) 20%
+  );
+}
+.container {
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1.25em;
+  border-radius: 8px;
+  gap: 1em;
+}
+/* .top-bar-outer {
+  width: 100%;
+  border: 1px solid rgb(99, 145, 148);
+  border-radius: 8px;
+  padding: 4px;
+} */
+.top-bar {
+  height: 200px;
+  width: 100%;
+
+  border: 1px solid rgb(99, 145, 148);
+  border-radius: 8px;
+  background-image: url('../assets/blue-sky-with-rainy-clouds.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+/* .main-content-outer {
+  width: 100%;
+  border: 1px solid rgb(99, 145, 148);
+  border-radius: 8px;
+  padding: 4px;
+} */
+.main-content {
+  height: 550px;
+  width: 100%;
+
+  opacity: 0.6;
+  background-color: #eee4db;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  border-radius: 8px;
+}
+
+h1 {
+  color: rgb(72, 206, 250);
+  font-size: 36px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+}
+label {
+  color: white;
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+input {
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+  border: 2px solid rgb(73, 73, 129);
+}
+.btn {
+  border: 2px solid rgb(73, 73, 129);
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+.btn:hover {
+  cursor: pointer;
+  background: rgb(73, 73, 129);
+  color: white;
+}
+b {
+  color: rgb(73, 73, 129);
+}
+
+.error-msg {
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 25px;
+  color: rgb(73, 73, 129);
+  font-size: 18px;
+}
+
+@media screen and (min-width: 768px) {
+  form {
+    flex-direction: row;
+    gap: 4px;
+  }
+}
