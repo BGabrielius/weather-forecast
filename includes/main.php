@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 function getRealIpAddr()
 {
     $ipHeaders = [
@@ -42,7 +44,7 @@ function getCountryCode($ip)
     return isset($data['country']) ? $data['country'] : null;
 }
 $countryCode = getCountryCode($vis_ip);;
-$weatherData = [];
+$weatherData;
 
 if (array_key_exists('submit', $_GET)) {
     if (!$_GET['city']) {
@@ -50,24 +52,40 @@ if (array_key_exists('submit', $_GET)) {
     }
 
     if ($_GET['city']) {
-        print_r("https://api.openweathermap.org/data/2.5/forecast?q=" . $_GET['city'] . ',' . $country_code . "&appid=" . $_ENV["API"]);
         $apiData = @file_get_contents("https://api.openweathermap.org/data/2.5/forecast?q=" . $_GET['city'] . ',' . $country_code . "&appid=" . $_ENV["API"]);
         if (!$apiData) {
             $apiData = @file_get_contents("https://api.openweathermap.org/data/2.5/forecast?q=" . $_GET['city'] . "&appid=" . $_ENV['API']);
             if (!$apiData) {
                 $error = "City was not found";
             } else if ($apiData) {
-                print_r('SECOND', $apiData);
-                applyWeatherData($apiData);
+                $weatherData = filterWeatherData($apiData);
             }
         } else if ($apiData) {
-            print_r('FIRSST', $apiData);
-            applyWeatherData($apiData);
+            $weatherData = filterWeatherData($apiData);
         }
     }
 }
 
-function applyWeatherData($apiData)
+function filterWeatherData($apiData)
 {
+    $weatherData = [];
     $parsedData = json_decode($apiData, true);
+    $currentDate = substr($parsedData['list'][0]['dt_txt'], 0, 10);
+
+    $j = 0;
+    for ($i = 0; $i < 4; $i++) {
+        $k = 0;
+        for ($j; $j < sizeof($parsedData['list']); $j++) {
+            if ($currentDate === substr($parsedData['list'][$j]['dt_txt'], 0, 10)) {
+                $weatherData[$i][$k] = $parsedData['list'][$j];
+                $k++;
+            } else if ($currentDate !== substr($parsedData['list'][$j]['dt_txt'], 0, 10)) {
+                $currentDate = substr($parsedData['list'][$j]['dt_txt'], 0, 10);
+                break;
+            }
+        }
+    }
+    // Formatted output;
+    echo "<pre>" . print_r($weatherData, true) . "</pre>";
+    return $weatherData;
 }
