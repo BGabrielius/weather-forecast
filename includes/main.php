@@ -87,5 +87,9 @@ function filterWeatherData($apiData)
     }
     // Formatted output;
     echo "<pre>" . print_r($weatherData, true) . "</pre>";
+
+    // // Celsius = Kelvin - 273.15
+
+
     return $weatherData;
 }
