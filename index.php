@@ -34,48 +34,29 @@ require_once './includes/main.php';
             } ?>
 
             <section class="topbar">
-                <?php
-                // Celsius = Kelvin - 273.15
-                if (isset($weatherData)) {
-                    echo "
-                    <div class='topbar-top'>
-                        <div class='date-wrapper topbar-top-left'>
-                            <div class='date-container'>
-                                <p class='date'>" . substr($weatherData[0][0]['dt_txt'], 0, 10) . "</p>
-                                <p class='date date-sub'>Today</p>
+                <?php if (isset($weatherData)) : ?>
+                    <?php foreach ($weatherData as $weatherDayData) : ?>
+                        <div class='card'>
+                            <div class='card-top'>
+                                <div class='date-container'>
+                                    <p class='date'><?= substr($weatherDayData[0]['dt_txt'], 0, 10); ?></p>
+                                    <p class='date date-day'>Today</p>
+                                </div>
+                                <div class='temp-container'>
+                                    <div class='temp-high-container'>
+                                        <p><?= round($weatherDayData[0]['main']['temp_max'] - 273.15); ?></p>
+                                    </div>
+                                    <div class='temp-low-container'>
+                                        <p><?= round($weatherDayData[0]['main']['temp_min'] - 273.15); ?></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class='temp-container'>
-                                <div class='temp-max'>
-                                    <p class='temp'>" . round($weatherData[0][0]['main']['temp_max'] - 273.15) . "</p>
-                                </div>
-                                <div class='temp-min'>
-                                    <p class='temp'>" . round($weatherData[0][0]['main']['temp_min'] - 273.15) . "</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='date-wrapper topbar-top-right'>
-                            <div class='date-container'>
-                                <p class='date'>" . substr($weatherData[1][0]['dt_txt'], 0, 10) . "</p>
-                                <p class='date date-sub'>Tommorow</p>
-                            </div>
-                            <div class='temp-container'>
-                                <div class='temp-max'>
-                                    <p class='temp'>" . round($weatherData[1][0]['main']['temp_max'] - 273.15) . "</p>
-                                </div>
-                                <div class='temp-min'>
-                                    <p class='temp'>" . round($weatherData[1][0]['main']['temp_min'] - 273.15) . "</p>
-                                </div>
+                            <div class='card-bottom'>
+                                fgdgdf
                             </div>
                         </div>
-                    </div>";
-                    foreach ($weatherData[0] as $todayData) {
-                        echo "<div>
-                        <p>" . '' . "</p>
-                        <p></p>
-                        </div>";
-                    }
-                }
-                ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </section>
             <section class="main-content"></section>
 
