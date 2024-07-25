@@ -17,6 +17,7 @@ require_once './includes/main.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather forecast</title>
+    <script src="./includes/eventHandler/eventHandler.js" defer></script>
     <link rel="stylesheet" href="./css/resets.css">
     <link rel="stylesheet" href="./css/main.css">
 </head>
@@ -35,30 +36,57 @@ require_once './includes/main.php';
 
             <section class="topbar">
                 <?php if (isset($weatherData)) : ?>
-                    <?php foreach ($weatherData as $weatherDayData) : ?>
-                        <div class='card'>
+                    <?php
+                    $minMaxDayTempArr = handleHighLowDayTemp($weatherData);
+                    for ($i = 0; $i < count($minMaxDayTempArr[0]); $i++) : ?>
+                        <div class='card' id="currentDay" data-param='<?php echo $i; ?>'>
                             <div class='card-top'>
                                 <div class='date-container'>
-                                    <p class='date'><?= substr($weatherDayData[0]['dt_txt'], 0, 10); ?></p>
-                                    <p class='date date-day'>Today</p>
+                                    <p class='date'><?= substr($weatherData[$i][0]['dt_txt'], 0, 10); ?></p>
+                                    <p class='date date-day'>
+                                        <?php
+                                        $day = $i == 0 ? "Today" : ($i == 1 ? "Tomorrow" : "");
+                                        ?>
+                                        <?= $day; ?>
+                                    </p>
                                 </div>
                                 <div class='temp-container'>
                                     <div class='temp-high-container'>
-                                        <p><?= round($weatherDayData[0]['main']['temp_max'] - 273.15); ?></p>
+                                        <p>
+                                            <b>
+                                                <?php
+                                                if (round($minMaxDayTempArr[1][$i]) > 0) echo '+';
+                                                echo round($minMaxDayTempArr[1][$i]);
+                                                ?>
+                                            </b>
+                                            &deg;C
+                                        </p>
                                     </div>
                                     <div class='temp-low-container'>
-                                        <p><?= round($weatherDayData[0]['main']['temp_min'] - 273.15); ?></p>
+                                        <p>
+                                            <b>
+                                                <?php
+                                                if (round($minMaxDayTempArr[0][$i]) > 0) echo '+';
+                                                echo round($minMaxDayTempArr[0][$i]);
+                                                ?>
+                                            </b>
+                                            &deg;C
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            <div class='card-bottom'>
-                                fgdgdf
-                            </div>
+                            <!-- <div class='card-bottom'>
+
+                            </div> -->
                         </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                    <?php endfor; ?>
             </section>
-            <section class="main-content"></section>
+            <section class="main-content">
+                <div class="content-first-container">
+
+                </div>
+            </section>
+        <?php endif; ?>
 
 
         </div>
