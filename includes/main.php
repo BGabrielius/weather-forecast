@@ -28,8 +28,6 @@ function getRealIpAddr()
     return null;
 }
 
-$vis_ip = getRealIpAddr();
-
 function getCountryCode($ip)
 {
     $url = "https://ipinfo.io/{$ip}/json";
@@ -42,28 +40,6 @@ function getCountryCode($ip)
     $data = json_decode($response, true);
 
     return isset($data['country']) ? $data['country'] : null;
-}
-$countryCode = getCountryCode($vis_ip);;
-$weatherData;
-
-if (array_key_exists('submit', $_GET)) {
-    if (!$_GET['city']) {
-        $error = 'Sorry, your input field is empty';
-    }
-
-    if ($_GET['city']) {
-        $apiData = @file_get_contents("https://api.openweathermap.org/data/2.5/forecast?q=" . $_GET['city'] . ',' . $country_code . "&appid=" . $_ENV["API"]);
-        if (!$apiData) {
-            $apiData = @file_get_contents("https://api.openweathermap.org/data/2.5/forecast?q=" . $_GET['city'] . "&appid=" . $_ENV['API']);
-            if (!$apiData) {
-                $error = "City was not found";
-            } else if ($apiData) {
-                $weatherData = filterWeatherData($apiData);
-            }
-        } else if ($apiData) {
-            $weatherData = filterWeatherData($apiData);
-        }
-    }
 }
 
 function filterWeatherData($apiData)
@@ -85,11 +61,58 @@ function filterWeatherData($apiData)
             }
         }
     }
-    // Formatted output;
-    echo "<pre>" . print_r($weatherData, true) . "</pre>";
-
-    // // Celsius = Kelvin - 273.15
-
 
     return $weatherData;
+}
+
+function handleHighLowDayTemp($weatherData)
+{
+    $minDayTempArr = [INF, INF, INF, INF];
+    $maxDayTempArr = [-INF, -INF, -INF, -INF];
+
+    for ($i = 0; $i < 4; $i++) {
+        for ($j = 0; $j < sizeof($weatherData[$i]); $j++) {
+            // // Celsius = Kelvin - 273.15
+            if ($weatherData[$i][$j]['main']['temp_min'] - 273.15 < $minDayTempArr[$i]) {
+                $minDayTempArr[$i] = $weatherData[$i][$j]['main']['temp_min'] - 273.15;
+            }
+            if ($weatherData[$i][$j]['main']['temp_max'] - 273.15 > $maxDayTempArr[$i]) {
+                $maxDayTempArr[$i] = $weatherData[$i][$j]['main']['temp_max'] - 273.15;
+            }
+        }
+    }
+    $minMaxDayTempArr = [$minDayTempArr, $maxDayTempArr];
+    return $minMaxDayTempArr;
+}
+
+function handleWeatherData($weatherData)
+{
+    echo "<pre>" . print_r($weatherData, true) . "</pre>";
+}
+
+
+
+$visIp = getRealIpAddr();
+$error = '';
+if (array_key_exists('submit', $_GET)) {
+    if (!$_GET['city']) {
+        $error = 'Sorry, your input field is empty';
+    }
+
+    if ($_GET['city']) {
+        $countryCode = getCountryCode($visIp);
+        $apiData = @file_get_contents("https://api.openweathermap.org/data/2.5/forecast?q=" . $_GET['city'] . ',' . $countryCode . "&appid=" . $_ENV["API"]);
+        if (!$apiData) {
+            $apiData = @file_get_contents("https://api.openweathermap.org/data/2.5/forecast?q=" . $_GET['city'] . "&appid=" . $_ENV['API']);
+            if (!$apiData) {
+                $error = "City was not found";
+            } else if ($apiData) {
+                $weatherData = filterWeatherData($apiData);
+                handleWeatherData($weatherData);
+            }
+        } else if ($apiData) {
+            $weatherData = filterWeatherData($apiData);
+            handleWeatherData($weatherData);
+        }
+    }
 }
