@@ -71,6 +71,7 @@ input {
 .topbar {
   height: 200px;
   width: 100%;
+  padding: 0.5rem;
 
   border: 1px solid rgb(99, 145, 148);
   border-radius: 8px;
@@ -81,12 +82,27 @@ input {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
+  gap: 1rem;
 }
 
 /* topbar>card */
 .card {
   width: 100%;
-  min-width: 160px;
+  min-width: 216px;
+
+  background-color: transparent;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+.card:hover {
+  cursor: pointer;
+  background-color: rgba(173, 234, 255, 1);
+  transition: 0.3s ease-in;
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 .card-top {
   display: flex;
@@ -111,6 +127,7 @@ input {
   justify-content: space-between;
 
   width: 105px;
+  min-width: 105px;
   height: 55px;
 
   padding: 0.5rem;
@@ -139,10 +156,10 @@ input {
   width: 30%;
   height: 55px;
   gap: 4px;
+  min-width: 100px;
 }
 .temp-container p {
   font-size: 18px;
-  font-weight: bold;
 }
 .temp-high-container {
   background-color: #f5f2bf;
@@ -165,6 +182,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 8px;
 }
 
 /* main content */
@@ -176,6 +194,11 @@ input {
   background-color: #eee4db;
 
   border-radius: 8px;
+}
+.content-first-container {
+  width: 100%;
+  height: calc(100% / 3);
+  opacity: 0.5;
 }
 
 /* messages */
