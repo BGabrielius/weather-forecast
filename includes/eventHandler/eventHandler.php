@@ -1,11 +1,15 @@
 <?php
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
-    if ($_POST['action'] === 'myFunction' && isset($_POST['param'])) {
-        myFunction($_POST['param']);
+    if ($_POST['action'] === 'handleDayChange' && isset($_POST['param'])) {
+        handleDayChange($_POST['param']);
     }
 }
-function myFunction($param)
+
+function handleDayChange($param)
 {
-    echo $param;
+    session_start();
+    if (isset($_SESSION['curDay']))
+        if ($param != $_SESSION['curDay']) {
+            $_SESSION['curDay'] = $param;
+        }
 }

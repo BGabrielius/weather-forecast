@@ -1,4 +1,6 @@
 <?php
+session_start();
+$_SESSION["curDay"] = 0;
 
 use Dotenv\Dotenv;
 
@@ -8,6 +10,8 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 require_once './includes/main.php';
+require_once './includes/eventHandler/eventHandler.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +24,9 @@ require_once './includes/main.php';
     <script src="./includes/eventHandler/eventHandler.js" defer></script>
     <link rel="stylesheet" href="./css/resets.css">
     <link rel="stylesheet" href="./css/main.css">
+    <script>
+
+    </script>
 </head>
 
 <body>
@@ -39,7 +46,7 @@ require_once './includes/main.php';
                     <?php
                     $minMaxDayTempArr = handleHighLowDayTemp($weatherData);
                     for ($i = 0; $i < count($minMaxDayTempArr[0]); $i++) : ?>
-                        <div class='card' id="currentDay" data-param='<?php echo $i; ?>'>
+                        <div class='card <?php echo $_SESSION["curDay"] === $i ? 'card-active' : '' ?>' data-param='<?php echo $i; ?>' id=<?php echo 'day-' . strval($i); ?>>
                             <div class='card-top'>
                                 <div class='date-container'>
                                     <p class='date'><?= substr($weatherData[$i][0]['dt_txt'], 0, 10); ?></p>
