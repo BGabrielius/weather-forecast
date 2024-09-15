@@ -1,3 +1,10 @@
+/* Global styles */
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Outer most wrapper/container */
 .wrapper {
   width: 100%;
@@ -196,7 +203,7 @@ input {
 }
 
 /* main content */
-.main-content {
+.main-content-wrapper {
   height: 550px;
   width: 100%;
 
@@ -205,10 +212,27 @@ input {
 
   border-radius: 8px;
 }
-.content-first-container {
+.main-content-container {
   width: 100%;
-  height: calc(100% / 3);
+  height: 100%;
   opacity: 0.5;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.hours-clouds-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  width: 100%;
+}
+.hours-container {
+}
+.clouds-container {
 }
 
 /* messages */

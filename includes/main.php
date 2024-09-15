@@ -62,6 +62,7 @@ function filterWeatherData($apiData)
         }
     }
 
+
     return $weatherData;
 }
 
@@ -87,7 +88,7 @@ function handleHighLowDayTemp($weatherData)
 
 function handleWeatherData($weatherData)
 {
-    echo "<pre>" . print_r($weatherData, true) . "</pre>";
+    // echo "<pre>" . print_r($weatherData, true) . "</pre>";
 }
 
 

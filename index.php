@@ -88,11 +88,37 @@ require_once './includes/eventHandler/eventHandler.php';
                         </div>
                     <?php endfor; ?>
             </section>
-            <section class="main-content">
-                <div class="content-first-container">
+            <section class="main-content-wrapper">
+                <?php for ($i = 0; $i < count($weatherData); $i++) : ?>
+                    <?php if ($_SESSION['curDay'] == $i) : ?>
+                        <div class="main-content-container">
+                            <div class="hours-clouds-container">
+                                <?php for ($j = 0; $j < count($weatherData[$i]); $j++) : ?>
+                                    <div class="hours-container flex-container">
+                                        <p><?= substr($weatherData[$i][$j]['dt_txt'], 10, -3); ?></p>
+                                    </div>
+                                    <div class="clouds-container flex-container">
 
-                </div>
+                                    </div>
+                                <?php endfor; ?>
+                            </div>
+                            <div>
+                                <p></p>
+                                <div></div>
+                            </div>
+                            <div>
+                                <p></p>
+                                <div></div>
+                            </div>
+                            <div>
+                                <p></p>
+                                <div></div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endfor; ?>
             </section>
+            <?php echo "<pre>" . print_r(substr($weatherData[0][0]['dt_txt'], 10, -3), true) . "</pre>"; ?>
         <?php endif; ?>
 
 
